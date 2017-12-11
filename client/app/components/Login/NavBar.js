@@ -12,7 +12,7 @@ class NavBar extends Component {
       			Tech Demo Home
 					</Link>
 					<Link className="navbar-item" to="/helloworld">
-      			Hello World
+      			Email Example
 					</Link>
 					<Link className="navbar-item" to="/signup">
       			Sign Up
