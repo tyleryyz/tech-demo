@@ -75,22 +75,39 @@ class ImageUpload extends React.Component {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
 
+		let $pageData;
+		let userObject = JSON.parse(localStorage.getItem('user'))
+		console.log(userObject);
+		if (userObject){
+			if (userObject.permission === "student"){
+				$pageData = (
+					<div className="previewComponent">
+						<form onSubmit={(e)=>this._handleSubmit(e)}>
+							<input className="fileInput"
+								type="file"
+								onChange={(e)=>this._handleImageChange(e)} />
+							<button className="submitButton"
+								type="submit"
+								onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
+						</form>
+						<div className="imgPreview">
+							{$imagePreview}
+						</div>
+					</div>
+				)
+			}
+			else{
+				$pageData = (<p>Tutors don't need to see this page, because reasons</p>)
+			}
+		}
+		else{$pageData=(<h1>Log in to view page!</h1>)}
+
     return (
-      <div className="previewComponent">
-        <form onSubmit={(e)=>this._handleSubmit(e)}>
-          <input className="fileInput" 
-            type="file" 
-            onChange={(e)=>this._handleImageChange(e)} />
-          <button className="submitButton" 
-            type="submit" 
-            onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
-        </form>
-        <div className="imgPreview">
-          {$imagePreview}
-        </div>
-      </div>
-    )
+			<div>
+			{$pageData}
+			</div>
+		)
   }
 }
-  
+
 export default ImageUpload;

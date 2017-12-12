@@ -31,6 +31,8 @@ class Home extends Component {
     fetch('/api/counters', { method: 'POST' })
       .then(res => res.json())
       .then(json => {
+				console.log(json);
+				console.log(json.count);
         let data = this.state.counters;
         data.push(json);
 
@@ -84,8 +86,16 @@ class Home extends Component {
   }
 
   render() {
+		let $userData;
+		let userObject = JSON.parse(localStorage.getItem('user'))
+		console.log(userObject);
+		if (userObject){
+			console.log(userObject.fname)
+			$userData = (<h1>Hello {userObject.fname} {userObject.lname}!</h1>)
+		}
     return (
       <div>
+			{$userData}
         <p>Counters:</p>
 
         <ul>

@@ -4,41 +4,45 @@ import {Link} from 'react-router-dom';
 import '../../styles/bulma.css';
 
 class SignUp extends Component {
-	handleSignUp(e) {
 
-    e.preventDefault();
-    const email = e.target.elements.email.value;
+	constructor(props) {
+    super(props);
+
+		this.handleSignUp = this.handleSignUp.bind(this);
+
+    this.routeTo = this.routeTo.bind(this);
+  }
+
+	handleSignUp(e){
+		e.preventDefault();
+		const email = e.target.elements.email.value;
 		const password = e.target.elements.password.value;
-		const lname = e.target.elements.lname.value;
 		const fname = e.target.elements.fname.value;
+		const lname = e.target.elements.lname.value;
 		const permission = e.target.elements.permission.value;
-		console.log(email);
-		console.log(password);
-		console.log(lname);
-		console.log(fname);
-		console.log(permission);
-
 		fetch('/api/users', {
-			method: 'POST',
-			body: JSON.stringify({
-				fname: fname,
-				lname: lname,
-				email: email,
-				password: password,
-				permission: permission
+													method: 'POST',
+													headers: {"Content-Type": "Application/json"},
+													body: JSON.stringify({
+																									fname: fname,
+																									lname: lname,
+																									email: email,
+																									password: password,
+																									permission: permission
 
-			})
-
-		})
-	       .then(function(response) {
-	         return response.json()
-	       }).then(function(body) {
-	         console.log(body);
-	       });
-
-
-		<Link to="/Dashboard" />
+																							})}
+			)
+      .then(res => res.json())
+      .then(json => {
+      });
+			this.routeTo()
 	}
+
+	routeTo() {
+		<Link to="/" />
+
+	}
+
   render() {
     return (<form onSubmit={this.handleSignUp}>
       <div className="container">

@@ -4,7 +4,24 @@ import { Link } from 'react-router-dom';
 import '../../styles/bulma.css';
 
 class NavBar extends Component {
+
+	handleLogOut(){
+		localStorage.removeItem('user');
+		<Link to="/" />
+	}
+
+	tutorsImba(){
+
+    fetch(`/api/users`, { method: 'DELETE' })
+	}
   render() {
+		let $opButton;
+		let userObject = JSON.parse(localStorage.getItem('user'))
+		console.log(userObject);
+		if (userObject){
+			console.log(userObject.fname)
+			$opButton = (<button onClick={this.tutorsImba}>Delete all users >:D</button>)
+		}
     return (
 			<nav className="navbar" aria-label="main navigation">
   			<div className="navbar-brand">
@@ -23,6 +40,8 @@ class NavBar extends Component {
 					<Link className="navbar-item" to="/imageupload">
       			Image Upload
 					</Link>
+					<button onClick={this.handleLogOut}>Log Out</button>
+					{$opButton}
 			    <button className="button navbar-burger">
 			      <span></span>
 			      <span></span>

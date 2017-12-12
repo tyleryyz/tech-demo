@@ -1,18 +1,22 @@
 const User = require('../../models/User');
 
-module.exports = (app) => {
-  app.get('/api/users', (req, res, next) => {
-    User.find()
-      .exec()
-      .then((user) => res.json(user))
-      .catch((err) => next(err));
-  });
 
-  app.post('/api/users', function (req, res) {
+module.exports = (app) => {
+	var bodyParser = require('body-parser');
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({extended: false}));
+
+  app.get('/api/users', function (req, res, next) {
+    User.findOne({email: req.query.email, password:req.query.password})
+				.exec()
+	      .then((user) => res.json(user))
+	      .catch((err) => next(err));
+	  });
+
+  app.post('/api/users', function (req, res, next) {
     const user = new User();
-		console.log(req.body.fname);
 		user.fname=req.body.fname;
-		user.lanam=req.body.lname;
+		user.lname=req.body.lname;
 		user.email=req.body.email;
 		user.password=req.body.password;
 		user.permission=req.body.permission;
@@ -21,9 +25,8 @@ module.exports = (app) => {
       .catch((err) => next(err));
   });
 
-  app.delete('/api/users/:id', function (req, res, next) {
-    User.findOneAndRemove({ _id: req.params.id })
-      .exec()
+  app.delete('/api/users', function (req, res, next) {
+    User.deleteMany({})
       .then((user) => res.json())
       .catch((err) => next(err));
   });

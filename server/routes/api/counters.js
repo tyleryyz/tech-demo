@@ -1,7 +1,8 @@
 const Counter = require('../../models/Counter');
 
 module.exports = (app) => {
-  app.get('/api/counters', (req, res, next) => {
+
+	app.get('/api/counters', (req, res, next) => {
     Counter.find()
       .exec()
       .then((counter) => res.json(counter))
