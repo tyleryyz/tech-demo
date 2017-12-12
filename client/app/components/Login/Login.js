@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-
+import { withRouter } from 'react-router';
 import '../../styles/bulma.css';
 
 class LogIn extends Component {
@@ -30,7 +30,9 @@ class LogIn extends Component {
 								         this.setState({
 								           user: json
 								         });
+												 this.props.history.push('/');
 								       });
+
 	}
 
   render() {

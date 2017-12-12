@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+
 
 import '../../styles/bulma.css';
 
@@ -7,7 +9,7 @@ class NavBar extends Component {
 
 	handleLogOut(){
 		localStorage.removeItem('user');
-		<Link to="/" />
+		location.reload()
 	}
 
 	tutorsImba(){
@@ -19,8 +21,10 @@ class NavBar extends Component {
 		let userObject = JSON.parse(localStorage.getItem('user'))
 		console.log(userObject);
 		if (userObject){
-			console.log(userObject.fname)
-			$opButton = (<button onClick={this.tutorsImba}>Delete all users >:D</button>)
+			if(userObject.permission==="tutor"){
+				console.log(userObject.fname)
+				$opButton = (<button onClick={this.tutorsImba}>Delete all users >:D</button>)
+			}
 		}
     return (
 			<nav className="navbar" aria-label="main navigation">

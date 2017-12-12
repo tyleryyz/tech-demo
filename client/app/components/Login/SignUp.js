@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router';
+
 
 import '../../styles/bulma.css';
 
@@ -34,6 +36,7 @@ class SignUp extends Component {
 			)
       .then(res => res.json())
       .then(json => {
+				this.props.history.push('/LogIn');
       });
 			this.routeTo()
 	}
