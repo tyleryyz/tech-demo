@@ -1,60 +1,59 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+// This HelloWorld file is actually the Email Example.
+
 const AWS = require('aws-sdk');
+
+// Init variables for the SES object
+var accessKey;
+var secretAccess;
+var regionArea;
+
+fetchTextFile('http://localhost:8080/keys.txt', function(data){updateVars(data)});
+
+// This function is meant to call the server side files and will read
+// from the keys.txt file
+function fetchTextFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', path, false);
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                var words = httpRequest.responseText.split('\n');
+                accessKey=words[0];
+                secretAccess=words[1];
+                regionArea=words[2];
+                callback(words);
+            }
+        }
+    };
+    httpRequest.send();
+}
+
+function updateVars(data)
+{
+  accessKey=data[0];
+  secretAccess=data[1];
+  regionArea=data[2];
+}
+
+// Update the Access Keys
 AWS.config.update({
-    accessKeyId: "AKIAJUPGD63PGO6TDA6A",
-    secretAccessKey: "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",
-    region: "us-west-2"
+    accessKeyId: accessKey.trim(),
+    secretAccessKey: secretAccess.trim(),
+    region: regionArea.trim(),
 });
 
+// Create the emailer object
+const ses = new AWS.SES();
+
+// Init variables
 var firstname;
 var lastname;
 var email;
 var message;
 var subject;
-
-const ses = new AWS.SES();
-
-/* Default message sending
-const params = {
-  Destination: {
-    ToAddresses: ['jjg297@nau.edu']
-  },
-  Message: {
-    Body: {
-      Html: {
-        Charset: 'UTF-8',
-        Data:
-          'This message body contains HTML formatting, like <a class="ulink" href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide" target="_blank">Amazon SES Developer Guide</a>.'
-      },
-      Text: {
-        Charset: 'UTF-8',
-        Data: 'This is the message body in text format.'
-      }
-    },
-    Subject: {
-      Charset: 'UTF-8',
-      Data: 'Test email from code'
-    }
-  },
-  ReturnPath: 'jjg297@nau.edu',
-  Source: 'jjg297@nau.edu'
-};
-
-function sendTheEmail(params)
-{
-	ses.sendEmail(params, (err, data) => {
-  		if (err) console.log(err, err.stack)
-  		else console.log(data)
-		}
-	);
-}
-
-*/
-
-
-
 
 const HelloWorld = () => (
   <div>
