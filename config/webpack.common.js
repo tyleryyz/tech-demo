@@ -1,3 +1,6 @@
+/* 	Core System File
+	DO NOT EDIT WITHOUT GOOD REASON */
+
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -69,6 +72,10 @@ module.exports = {
         })
       }
     ]
+  },
+
+  node: {
+    fs: "empty"
   },
 
   plugins: [

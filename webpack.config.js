@@ -1,3 +1,6 @@
+/*  Core system file
+	DO NOT EDIT WITHOUT GOOD REASON	*/
+
 switch (process.env.NODE_ENV) {
   case 'prod':
   case 'production':

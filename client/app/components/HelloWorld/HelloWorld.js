@@ -2,10 +2,42 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const AWS = require('aws-sdk');
+
+var accessKey;
+var secretAccess;
+var regionArea;
+
+fetchTextFile('http://localhost:8080/keys.txt', function(data){updateVars(data)});
+
+function updateVars(data)
+{
+  accessKey=data[0];
+  secretAccess=data[1];
+  regionArea=data[2];
+}
+
+function fetchTextFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', path, false);
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                var words = httpRequest.responseText.split('\n');
+                accessKey=words[0];
+                secretAccess=words[1];
+                regionArea=words[2];
+                callback(words);
+            }
+        }
+    };
+    httpRequest.send();
+}
+
+
 AWS.config.update({
-    accessKeyId: "AKIAJUPGD63PGO6TDA6A",
-    secretAccessKey: "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",
-    region: "us-west-2"
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccess,
+    region: regionArea,
 });
 
 var firstname;
@@ -14,7 +46,7 @@ var email;
 var message;
 var subject;
 
-const ses = new AWS.SES();
+
 
 /* Default message sending
 const params = {
@@ -52,7 +84,6 @@ function sendTheEmail(params)
 }
 
 */
-
 
 
 
@@ -136,6 +167,12 @@ function sendTheEmail()
 {
 	// Params is basically what will be sent in the email when called
 	// It currently pulls the information entered in the fields above
+
+
+  const ses = new AWS.SES();
+
+
+
 	const params = {
 	  Destination: {
 	    ToAddresses: [email]

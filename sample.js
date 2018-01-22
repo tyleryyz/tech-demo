@@ -16,6 +16,9 @@
 
 // More S3 documentation at: http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 
+/*  Core system file
+	DO NOT EDIT WITHOUT GOOD REASON	*/
+
 // Load the SDK and UUID
 var AWS = require('aws-sdk');
 var uuid = require('node-uuid');
@@ -23,8 +26,14 @@ var uuid = require('node-uuid');
 // Create an S3 client
 var s3 = new AWS.S3();
 
+AWS.config.update({
+    accessKeyId: "AKIAJWH3XOXC6CUBEWZA",
+    secretAccessKey: "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",
+});
+
+
 // Create a bucket and upload something into it
-//var bucketName = 'jjg297-' + uuid.v4();
+// If the bucketName exists already, the existing bucket is chosen
 var bucketName = 'jjg297-my-first-bucket/Images';
 var keyName = 'hello_world.txt';
 

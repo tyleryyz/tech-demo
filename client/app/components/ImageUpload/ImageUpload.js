@@ -5,13 +5,43 @@ import 'whatwg-fetch';
 var AWS = require('aws-sdk');
 var uuid = require('node-uuid');
 
+var accessKey;
+var secretAccess;
+var regionArea;
+
+fetchTextFile('http://localhost:8080/keys.txt', function(data){updateVars(data)});
+
+function updateVars(data)
+{
+  accessKey=data[0];
+  secretAccess=data[1];
+}
+
+function fetchTextFile(path, callback) {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open('GET', path, false);
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                var words = httpRequest.responseText.split('\n');
+                accessKey=words[0];
+                secretAccess=words[1];
+                callback(words);
+            }
+        }
+    };
+    httpRequest.send();
+}
+
+
 AWS.config.update({
-    accessKeyId: "AKIAIH5JQB27XBZSBYLA",
-    secretAccessKey: "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",
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccess,
 });
 
 // Create an S3 client
 var s3 = new AWS.S3();
+
 
 // Create a bucket and upload something into it
 //var bucketName = 'jjg297-' + uuid.v4();
@@ -42,10 +72,11 @@ class ImageUpload extends React.Component {
       console.log(err)
     else
       console.log("Successfully uploaded data to " +
-        bucketName + "/" + filename);
+        bucketName + "/" + filename); window.location.reload();
   });
 
     console.log('Handling uploading, data presented: ', this.state.file);
+
   }
 
   // This changes the 'Please select an Image for Preview'
