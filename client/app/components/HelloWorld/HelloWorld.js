@@ -12,8 +12,7 @@ var regionArea;
 
 fetchTextFile('http://localhost:8080/keys.txt', function(data){updateVars(data)});
 
-// This function is meant to call the server side files and will read
-// from the keys.txt file
+
 function fetchTextFile(path, callback) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open('GET', path, false);
@@ -96,7 +95,7 @@ const HelloWorld = () => (
   				</div>
 			</div>
 
-          
+
           <div className="field">
             <div className="control">
               <label className="checkbox">
@@ -135,6 +134,12 @@ function sendTheEmail()
 {
 	// Params is basically what will be sent in the email when called
 	// It currently pulls the information entered in the fields above
+
+
+  const ses = new AWS.SES();
+
+
+
 	const params = {
 	  Destination: {
 	    ToAddresses: [email]

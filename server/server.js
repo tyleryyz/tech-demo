@@ -1,3 +1,7 @@
+/*  Core system file
+	DO NOT EDIT WITHOUT GOOD REASON
+	This is where the routing for the system occurs */
+
 const bodyParser = require('body-parser');
 const express = require('express');
 const fs = require('fs');

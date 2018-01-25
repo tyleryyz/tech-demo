@@ -48,6 +48,7 @@ AWS.config.update({
 // Create an S3 client
 var s3 = new AWS.S3();
 
+
 // Create a bucket and upload something into it
 //var bucketName = 'jjg297-' + uuid.v4();
 var bucketName = 'jjg297-my-first-bucket/Images';
@@ -77,10 +78,11 @@ class ImageUpload extends React.Component {
       console.log(err)
     else
       console.log("Successfully uploaded data to " +
-        bucketName + "/" + filename);
+        bucketName + "/" + filename); window.location.reload();
   });
 
     console.log('Handling uploading, data presented: ', this.state.file);
+
   }
 
   // This changes the 'Please select an Image for Preview'
@@ -110,22 +112,39 @@ class ImageUpload extends React.Component {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
 
+		let $pageData;
+		let userObject = JSON.parse(localStorage.getItem('user'))
+		console.log(userObject);
+		if (userObject){
+			if (userObject.permission === "student"){
+				$pageData = (
+					<div className="previewComponent">
+						<form onSubmit={(e)=>this._handleSubmit(e)}>
+							<input className="fileInput"
+								type="file"
+								onChange={(e)=>this._handleImageChange(e)} />
+							<button className="submitButton"
+								type="submit"
+								onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
+						</form>
+						<div className="imgPreview">
+							{$imagePreview}
+						</div>
+					</div>
+				)
+			}
+			else{
+				$pageData = (<p>Tutors don't need to see this page, because reasons</p>)
+			}
+		}
+		else{$pageData=(<h1>Log in to view page!</h1>)}
+
     return (
-      <div className="previewComponent">
-        <form onSubmit={(e)=>this._handleSubmit(e)}>
-          <input className="fileInput" 
-            type="file" 
-            onChange={(e)=>this._handleImageChange(e)} />
-          <button className="submitButton" 
-            type="submit" 
-            onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
-        </form>
-        <div className="imgPreview">
-          {$imagePreview}
-        </div>
-      </div>
-    )
+			<div>
+			{$pageData}
+			</div>
+		)
   }
 }
-  
+
 export default ImageUpload;

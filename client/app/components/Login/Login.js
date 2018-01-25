@@ -1,16 +1,38 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-
+import { withRouter } from 'react-router';
 import '../../styles/bulma.css';
 
 class LogIn extends Component {
-  handleLogIn(e) {
 
+	constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {}
+    };
+		this.handleLogIn = this.handleLogIn.bind(this)
+
+
+  }
+  handleLogIn(e) {
     e.preventDefault();
+		let apiResponse;
     const email = e.target.elements.email.value;
 		const password = e.target.elements.password.value;
+		fetch(`/api/users?email=${email}&password=${password}`, {
+													headers: {"Content-Type": "Application/json"},
+													method: 'GET'
+												})
+												.then(res => res.json())
+								       	.then(json => {
+													localStorage.setItem('user', JSON.stringify(json));
+								         this.setState({
+								           user: json
+								         });
+												 this.props.history.push('/');
+								       });
 
-		<Link to="/Dashboard" />
 	}
 
   render() {
@@ -41,7 +63,8 @@ class LogIn extends Component {
             </Link>
         }
       </div>
-    </form>);
+    </form>
+	);
   }
 }
 

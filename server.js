@@ -1,3 +1,6 @@
+/*  Core system file
+	DO NOT EDIT WITHOUT GOOD REASON	*/
+
 const nodemon = require('nodemon');
 const path = require('path');
 const AWS = require('aws-sdk');

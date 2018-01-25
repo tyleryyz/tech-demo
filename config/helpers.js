@@ -1,3 +1,6 @@
+/* 	Core System File
+	DO NOT EDIT WITHOUT GOOD REASON */
+
 const path = require('path');
 
 // Helper functions

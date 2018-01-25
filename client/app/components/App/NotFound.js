@@ -1,3 +1,7 @@
+/*  This is the "Page not Found" page.
+	If the user enters a non-existant, or non-imported page,
+	they will be sent here. */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 
