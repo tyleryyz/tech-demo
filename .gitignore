@@ -2,3 +2,4 @@ node_modules/
 /server/ses_config.json
 /client/public/keys.txt
 /dist/keys.txt
+/dist/js/app.js
